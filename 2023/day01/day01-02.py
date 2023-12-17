@@ -30,7 +30,7 @@ class File:
         self.codes = self.file.read().splitlines()
 
 
-codes = File("2023/day02/input.txt").codes
+codes = File("2023/day01/input.txt").codes
 """ [
     "two1nine",
     "eightwothree",
@@ -39,7 +39,7 @@ codes = File("2023/day02/input.txt").codes
     "4nineeightseven2",
     "zoneight234",
     "7pqrstsixteen"
-] """ 
+] """
 
 nums = []
 for i in codes:
@@ -47,12 +47,13 @@ for i in codes:
 
 nums2 = []
 for i in nums:
-    nums2.append(int(i[0] + i[-1]))
+    x = int(i[0] + i[-1])
+    nums2.append(x)
 
-print(nums2)
 
 result = 0
-for i in nums2:
-    result += i
+for i in range(len(nums2)):
+    print(nums2[i])
+    result += nums2[i]
 
 print(result)
