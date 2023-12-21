@@ -43,9 +43,9 @@ class Line:
 
 class Star:
     stars = []  # Star objects
-    def __init__(self, line, span):
+    def __init__(self, line, span_tuple):
         self.line = line  # line object
-        self.span = span  # range
+        self.span = span_tuple
         self.ratio_nums = []  # ints
         self.ratio = 1  # Changes with method
         Star.stars.append(self)
@@ -71,7 +71,7 @@ class Star:
         try:
             line_above = Line.lines[self.line.id - 1]
             append_adjacent_numbers_of_line(line_above)
-            
+
         except(IndexError):
             pass
 
@@ -93,10 +93,10 @@ class Star:
 
 class Number:
     numbers = [] # Number objects
-    def __init__(self, line, value, span):
+    def __init__(self, line, value, span_range):
         self.line = line  # line object
         self.value = value  # int
-        self.span = span  # range
+        self.span = span_range
         Number.numbers.append(self)
 
 
