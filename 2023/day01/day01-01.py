@@ -1,11 +1,10 @@
-class File:
+class txtFile:
     def __init__(self, path):
         self.path = path
-        self.file = open(path, "r")
-        self.codes = self.file.read().splitlines()
+        with open(self.path, "r") as file:
+            self.contents = file.read().splitlines()
 
-
-codes = File("2023/day01/input.txt").codes
+codes = txtFile("2023/day01/input.txt").contents
 
 nums = []
 for i in codes:

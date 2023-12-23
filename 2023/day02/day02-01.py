@@ -11,7 +11,8 @@ possible_games = []
 class txtFile:
     def __init__(self, path):
         self.path = path
-        self.contents = open(path, "r").read().splitlines()
+        with open(self.path, "r") as file:
+            self.contents = file.read().splitlines()
 
 
 class Game:
