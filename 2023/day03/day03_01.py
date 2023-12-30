@@ -10,14 +10,14 @@ class txtFile:
 
 class Line:
     lines = []  # line objects
+
     def __init__(self, string, id):
         def get_numbers():
-            numbers = re.findall("\d+", self.string)
+            numbers = re.findall(r"\d+", self.string)
             for number in numbers:
                 number_object = Number(self, number)
                 self.numbers.append(number_object)
             return
-    
 
         self.id = id
         self.string = string
@@ -27,21 +27,21 @@ class Line:
 
 
 class Number:
-    numbers = [] # Number objects
+    numbers = []  # Number objects
+
     def __init__(self, line, value):
         def get_span():
-            iters = re.finditer("\d+", self.line.string)
+            iters = re.finditer(r"\d+", self.line.string)
             for i in iters:
                 if i.group() == self.value:
                     return (i.start(), i.end())
-                
-        
+
         self.line = line  # line object
         self.value = value  # number
         self.span = get_span()
         self.part_number = False  # /True
         Number.numbers.append(self)
-        
+
     def check_if_part_number(self):
         def check_strings():
             # Sets the span to scan from string
@@ -54,31 +54,30 @@ class Number:
             # Tries to check line above
             try:
                 string_above = Line.lines[self.line.id - 1].string
-                string_to_scan = string_above[span_to_scan[0] : span_to_scan[1]]
-                if re.search("[^\d.]", string_to_scan) != None:
+                string_to_scan = string_above[span_to_scan[0]:span_to_scan[1]]
+                if re.search(r"[^\d.]", string_to_scan) is not None:
                     self.part_number = True
                     return
-            except(IndexError):
+            except (IndexError):
                 pass
-            
+
             # Checks own line
-            string_to_scan = self.line.string[span_to_scan[0] : span_to_scan[1]]
-            if re.search("[^\d.]", string_to_scan) != None:
+            string_to_scan = self.line.string[span_to_scan[0]:span_to_scan[1]]
+            if re.search(r"[^\d.]", string_to_scan) is not None:
                 self.part_number = True
                 return
-        
+
             # Tries to check line below
             try:
                 string_below = Line.lines[self.line.id + 1].string
-                string_to_scan = string_below[span_to_scan[0] : span_to_scan[1]]
-                if re.search("[^\d.]", string_to_scan) != None:
+                string_to_scan = string_below[span_to_scan[0]:span_to_scan[1]]
+                if re.search(r"[^\d.]", string_to_scan) is not None:
                     self.part_number = True
                     return
-            except(IndexError):
+            except (IndexError):
                 pass
 
             return
-        
 
         check_strings()
 
@@ -88,7 +87,7 @@ class Number:
 def sum_part_numbers(numbers):
     result = 0
     for number in numbers:
-        if number.part_number == True:
+        if number.part_number:
             result += int(number.value)
     return result
 

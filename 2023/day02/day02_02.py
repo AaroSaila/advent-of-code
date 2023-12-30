@@ -11,12 +11,13 @@ class txtFile:
 class Game:
     games = {}
     sum_of_powers = 0
+
     def __init__(self, id):
         self.id = id
         self.sets = []
         self.minimums = {"reds": None, "greens": None, "blues": None}
         self.power = None
-        if self.id != None:
+        if self.id is not None:
             self.games["Game " + str(self.id)] = self
 
     def check_minimums(self):
@@ -34,11 +35,14 @@ class Game:
         self.minimums["greens"] = greens[-1]
         self.minimums["blues"] = blues[-1]
         return
-    
+
     def check_power(self):
-        self.power = self.minimums["reds"] * self.minimums["greens"] * self.minimums["blues"]
+        reds = self.minimums["reds"]
+        greens = self.minimums["greens"]
+        blues = self.minimums["blues"]
+        self.power = reds * greens * blues
         Game.sum_of_powers += self.power
-        return        
+        return
 
 
 class Set:
@@ -56,30 +60,30 @@ def make_dict(list):
         game_list = game.split(":")
         games_dict[x] = game_list[1].split(";")
         x += 1
-    
+
     return games_dict
 
 
 def color_count(color, cubes):
     color_count = 0
     for cube in cubes:
-            if color in cube:
-                nums = re.findall("\d", cube)
-                try:
-                    nums[1]
-                    nums_string = ""
-                    for num in nums:
-                        nums_string += "".join(num)
-                    nums = int(nums_string)
-                    color_count += nums
-                except(IndexError):
-                    color_count += int(nums[0])
+        if color in cube:
+            nums = re.findall(r"\d", cube)
+            try:
+                nums[1]
+                nums_string = ""
+                for num in nums:
+                    nums_string += "".join(num)
+                nums = int(nums_string)
+                color_count += nums
+            except (IndexError):
+                color_count += int(nums[0])
     return color_count
 
 
 input_data = txtFile("2023/day02/input.txt").contents
 
-input_dict = make_dict(input_data)  # example: 1: [' 3 blue, 4 red', ' 1 red, 2 green, 6 blue', ' 2 green']
+input_dict = make_dict(input_data)
 
 for i in range(1, len(input_dict) + 1):
     game = Game(i)

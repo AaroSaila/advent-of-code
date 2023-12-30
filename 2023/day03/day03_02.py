@@ -10,6 +10,7 @@ class txtFile:
 
 class Line:
     lines = []  # line objects
+
     def __init__(self, string, id):
         def make_stars():
             star_list = []
@@ -18,9 +19,9 @@ class Line:
                 star_span = (star.start(), star.end())
                 star_object = Star(self, star_span)
                 star_list.append(star_object)
-            
+
             return star_list
-        
+
         def make_numbers():
             number_list = []
             numbers = re.finditer(r"\d+", self.string)
@@ -35,7 +36,6 @@ class Line:
 
             return number_list
 
-    
         self.id = id
         self.string = string
         self.stars = make_stars()
@@ -45,22 +45,24 @@ class Line:
 
 class Star:
     stars = []  # Star objects
+
     def __init__(self, line, span_tuple):
         self.line = line  # line object
         self.span = span_tuple
         self.ratio_nums = []  # ints
         self.ratio = 1  # Changes with method
         Star.stars.append(self)
-    
+
     def get_ratio(self):
         def append_adjacent_numbers_of_line(line):
             numbers = line.numbers
             for number in numbers:
-                star_adjacent_to_number = (self.span[0] or self.span[1]) in number.span
+                star_adjacent_to_number = (
+                    (self.span[0] or self.span[1]) in number.span
+                )
                 if star_adjacent_to_number:
                     self.ratio_nums.append(number.value)
             return
-
 
         def calculate_ratio():
             star_has_exactly_two_adjacent_nums = len(self.ratio_nums) == 2
@@ -74,27 +76,29 @@ class Star:
             line_above = Line.lines[self.line.id - 1]
             append_adjacent_numbers_of_line(line_above)
 
-        except(IndexError):
+        except IndexError:
             pass
 
         # Checks own line
         own_line = self.line
         append_adjacent_numbers_of_line(own_line)
-        
+
         # Tries to check line below
         try:
             line_below = Line.lines[self.line.id + 1]
             append_adjacent_numbers_of_line(line_below)
 
-        except(IndexError):
+        except IndexError:
             pass
 
         calculate_ratio()
 
         return
 
+
 class Number:
-    numbers = [] # Number objects
+    numbers = []  # Number objects
+
     def __init__(self, line, value, span_range):
         self.line = line  # line object
         self.value = value  # int

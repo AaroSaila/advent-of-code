@@ -4,6 +4,7 @@ class txtFile:
         with open(self.path, "r") as file:
             self.contents = file.read().splitlines()
 
+
 codes = txtFile("2023/day01/input.txt").contents
 
 nums = []

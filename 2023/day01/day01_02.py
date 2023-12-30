@@ -1,7 +1,17 @@
 import re
 
 
-numbers = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+numbers = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine"
+]
 
 
 class txtFile:
@@ -9,18 +19,18 @@ class txtFile:
         self.path = path
         with open(self.path, "r") as file:
             self.contents = file.read().splitlines()
-    
+
 
 class numberString:
     def __init__(self, string):
         self.string = string
 
     def parse_first_number(self):
-        chars = re.findall("\w", self.string)
+        chars = re.findall(r"\w", self.string)
         test_string = ""
         first_number = ""
         for i in chars:
-            if re.match("\d", i):
+            if re.match(r"\d", i):
                 first_number += i
                 return first_number
             else:
@@ -31,15 +41,15 @@ class numberString:
                         if number[0] in numbers:
                             first_number += str(int(x) + 1)
                             return first_number
-    
+
     def parse_last_number(self):
-        chars = re.findall("\w", self.string)
+        chars = re.findall(r"\w", self.string)
         chars_reversed = []
         test_string = ""
         for i in reversed(chars):
             chars_reversed.append(i)
         for i in chars_reversed:
-            if re.match("\d", i):
+            if re.match(r"\d", i):
                 last_number = i
                 return last_number
             else:
@@ -48,15 +58,17 @@ class numberString:
                     if z in test_string:
                         last_number = str((numbers.index(z) + 1))
                         return last_number
-        
-    
+
+
 def parse_numbers(string):
-     string_object = numberString(string)
-     parsed_string = string_object.parse_first_number() + string_object.parse_last_number()
-     return parsed_string
+    string_object = numberString(string)
+    first_number = string_object.parse_first_number()
+    last_number = string_object.parse_last_number()
+    parsed_string = first_number + last_number
+    return parsed_string
 
 
-codes = txtFile("2023/day01/input.txt").contents #["kpmrk5flx"] 
+codes = txtFile("2023/day01/input.txt").contents
 
 nums = []
 for i in codes:

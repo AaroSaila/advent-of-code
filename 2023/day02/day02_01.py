@@ -26,9 +26,11 @@ class Set:
     def __init__(self, cubes):
         self.cubes = cubes.split(",")
         self.reds = color_count("red", self.cubes)
-        if (color_count("blue", self.cubes) > maximums["blues"] or 
+        if (
+            color_count("blue", self.cubes) > maximums["blues"] or
             color_count("red", self.cubes) > maximums["reds"] or
-            color_count("green", self.cubes) > maximums["greens"]):
+            color_count("green", self.cubes) > maximums["greens"]
+        ):
             self.possible = False
         else:
             self.possible = True
@@ -41,24 +43,24 @@ def make_dict(list):
         game_list = game.split(":")
         games_dict[x] = game_list[1].split(";")
         x += 1
-    
+
     return games_dict
 
 
 def color_count(color, cubes):
     color_count = 0
     for cube in cubes:
-            if color in cube:
-                nums = re.findall("\d", cube)
-                try:
-                    nums[1]
-                    nums_string = ""
-                    for num in nums:
-                        nums_string += "".join(num)
-                    nums = int(nums_string)
-                    color_count += nums
-                except(IndexError):
-                    color_count += int(nums[0])
+        if color in cube:
+            nums = re.findall(r"\d", cube)
+            try:
+                nums[1]
+                nums_string = ""
+                for num in nums:
+                    nums_string += "".join(num)
+                nums = int(nums_string)
+                color_count += nums
+            except (IndexError):
+                color_count += int(nums[0])
     return color_count
 
 
@@ -72,7 +74,7 @@ for i in range(1, len(games) + 1):
         set_object = Set(games[i][x])
         game.sets.append(set_object)
     for _set in game.sets:
-        if _set.possible == False:
+        if not _set.possible:
             game.possible = False
     if game.possible:
         possibles += 1
@@ -84,6 +86,12 @@ sum_of_possible_game_ids = 0
 for id in possible_games:
     sum_of_possible_game_ids += id
 
-print("imposibles: " + str(impossibles) + "\n" + "possibles: " + str(possibles))
+print(
+    "imposibles: "
+    + str(impossibles)
+    + "\n"
+    + "possibles: "
+    + str(possibles)
+)
 print("possible games: ", possible_games)
 print("sum of impossible game ids", sum_of_possible_game_ids)
