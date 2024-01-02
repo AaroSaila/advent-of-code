@@ -14,7 +14,7 @@ class Map:
             for row in row_data:
                 rows.append(Row(row))
             return rows
-        
+
         self.rows = process_row_data(row_data)  # Row objects
         Map.maps.append(self)
 
