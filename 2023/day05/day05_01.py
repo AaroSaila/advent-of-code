@@ -61,6 +61,7 @@ def process_input_data(data):
 
     return processed_data
 
+
 def process_seed(seed, seed_maps):
     """Processes seed through given maps"""
 
@@ -74,21 +75,17 @@ def process_seed(seed, seed_maps):
     for _map in seed_maps.items():
         for row in _map[1]:
             original_seed = seed
-            seed = process_row(
-                seed,
-                row["source"],
-                row["destination"],
-                row["range"]
-            )
+            seed = process_row(seed, row["source"], row["destination"], row["range"])
             if seed != original_seed:
                 break
 
     return seed
 
+
 with open(
     "/home/aaro/Documents/Code/advent-of-code/2023/day05/input.txt",
     "r",
-    encoding="utf-8"
+    encoding="utf-8",
 ) as file:
     input_data = file.read().splitlines()
 
