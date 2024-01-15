@@ -1,7 +1,0 @@
-seed
-seed compare to source number
-if seed between source_start_number and source_start_number + range_length
-    x = seed_number - source_start_number
-    destination_number = destination_source_number + x
-else
-    destination_number = seed
