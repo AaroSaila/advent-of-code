@@ -1,4 +1,4 @@
-"""advent of code day 5 part 1 version 2"""
+"""advent of code day 5 part 1"""
 import re
 
 
